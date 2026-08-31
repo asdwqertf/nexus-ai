@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Antigravity · Claude Edition</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- شريط علوي -->
+        <header class="top-nav">
+            <div class="user-tier">
+                <span class="plan-badge">Antigravity Core · <a href="#" class="upgrade-link">Google DeepMind Edition</a></span>
+            </div>
+            <div class="nav-actions">
+                <button class="icon-btn" onclick="clearChat()" title="جلسة جديدة">
+                    <i class="fa-solid fa-rotate-right"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- منطقة المحادثة والعرض الرئيسي -->
+        <main class="chat-area" id="chatArea">
+            
+            <!-- الشاشة الرئيسية -->
+            <div class="hero-section" id="heroSection">
+                <h1 class="hero-title">
+                    دردشة تحت ضوء القمر؟ <span class="claude-sun">✹</span>
+                </h1>
+            </div>
+
+            <!-- قائمة الرسائل المتدفقة -->
+            <div class="messages-list" id="messagesList"></div>
+
+        </main>
+
+        <!-- مربع الإدخال الرئيسي مع الكبسولات والأزرار -->
+        <div class="prompt-container">
+            <div class="prompt-box">
+                
+                <textarea 
+                    id="promptInput" 
+                    rows="1" 
+                    placeholder="كيف يمكن لـ Antigravity مساعدتك اليوم في البرمجة والاستدلال؟" 
+                    dir="auto"></textarea>
+
+                <!-- أزرار الإجراءات داخل الحقل -->
+                <div class="box-footer">
+                    <div class="right-tools">
+                        <button class="tool-btn add-btn" title="إضافة ملف أو مشروع">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                        
+                        <!-- زر وضع التفكير -->
+                        <div class="dropdown-wrapper">
+                            <button class="mode-pill-btn" id="thinkingModeBtn" onclick="toggleThinkingMenu(event)">
+                                <span id="currentModeIcon">🧠</span>
+                                <span id="currentModeLabel">تفكير طويل (Extended)</span>
+                                <i class="fa-solid fa-chevron-down arrow-icon"></i>
+                            </button>
+                            <div class="custom-dropdown" id="thinkingDropdown">
+                                <div class="dropdown-item" onclick="selectThinkingMode('fast', 'تفكير سريع (Fast)', '⚡')">
+                                    <div class="mode-icon-circle fast">⚡</div>
+                                    <div>
+                                        <div class="item-title">تفكير سريع (Fast)</div>
+                                        <div class="item-desc">استجابة فورية ومباشرة</div>
+                                    </div>
+                                </div>
+                                <div class="dropdown-item" onclick="selectThinkingMode('smart', 'تفكير ذكي (Smart)', '✨')">
+                                    <div class="mode-icon-circle smart">✨</div>
+                                    <div>
+                                        <div class="item-title">تفكير ذكي (Smart)</div>
+                                        <div class="item-desc">استدلال متوازن ودقيق</div>
+                                    </div>
+                                </div>
+                                <div class="dropdown-item active" onclick="selectThinkingMode('extended', 'تفكير طويل (Extended)', '🧠')">
+                                    <div class="mode-icon-circle extended">🧠</div>
+                                    <div>
+                                        <div class="item-title">تفكير طويل (Extended)</div>
+                                        <div class="item-desc">تحليل مكثف وتفكيك للمسائل المعقدة</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="left-tools">
+                        <!-- محدد النماذج مع إضافة نموذج Antigravity 2.0 وشعاره -->
+                        <div class="dropdown-wrapper">
+                            <div class="model-selector-btn" id="modelSelectorBtn" onclick="toggleModelMenu(event)">
+                                <span class="model-avatar-mini" id="currentModelAvatar">🪐</span>
+                                <span id="currentModelLabel">Antigravity 2.0</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                            <div class="custom-dropdown left-align" id="modelDropdown">
+                                <div class="dropdown-item active" onclick="selectModel('Antigravity 2.0 (DeepMind)', 'antigravity', '🪐')">
+                                    <div class="model-avatar-badge antigravity">🪐</div>
+                                    <div>
+                                        <div class="item-title">Antigravity 2.0 (DeepMind)</div>
+                                        <div class="item-desc">الوكيل البرمجي الأقوى في التخطيط وبناء الأنظمة</div>
+                                    </div>
+                                </div>
+                                <div class="dropdown-item" onclick="selectModel('Claude 3.7 Sonnet', 'qwen-coder', '⚡')">
+                                    <div class="model-avatar-badge qwen">⚡</div>
+                                    <div>
+                                        <div class="item-title">Claude 3.7 Sonnet (Hybrid)</div>
+                                        <div class="item-desc">نموذج الاستدلال والتحليل اللغوي المتقدم</div>
+                                    </div>
+                                </div>
+                                <div class="dropdown-item" onclick="selectModel('Claude 3.5 Sonnet', 'llama-chat', '🦙')">
+                                    <div class="model-avatar-badge llama">🦙</div>
+                                    <div>
+                                        <div class="item-title">Claude 3.5 Sonnet</div>
+                                        <div class="item-desc">المحادثات العامة وسرعة الإنجاز اليومية</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="send-btn" id="sendBtn" title="إرسال">
+                            <i class="fa-solid fa-arrow-up"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- كبسولات الاقتراحات السفلية -->
+            <div class="suggestions-bar">
+                <button class="capsule-btn" onclick="quickPrompt('اختبار قدرات Antigravity 2.0 في التخطيط والبرمجة')">
+                    <i class="fa-regular fa-lightbulb"></i>
+                    <span>اختبار Antigravity</span>
+                </button>
+                <button class="capsule-btn" onclick="quickPrompt('نصائح لتنظيم الوقت وأمور الحياة اليومية')">
+                    <i class="fa-solid fa-mug-hot"></i>
+                    <span>أمور الحياة</span>
+                </button>
+                <button class="capsule-btn" onclick="quickPrompt('اكتب كود بايثون أو Rust احترافي لبناء سيرفر ويب')">
+                    <i class="fa-solid fa-code"></i>
+                    <span>شفرة &lt;/&gt;</span>
+                </button>
+                <button class="capsule-btn" onclick="quickPrompt('تعلّم كيفية بناء وكلاء الذكاء الاصطناعي مع DeepMind')">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>يتعلم</span>
+                </button>
+                <button class="capsule-btn" onclick="quickPrompt('اكتب خطة معمارية كاملة لمشروع تقني جديد')">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                    <span>يكتب</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
